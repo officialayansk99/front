@@ -577,6 +577,12 @@ export default function LandingLayout() {
             </div>
 
             {/* Regulatory: add the client's own licence/registration details here once provided. Do not reuse another firm's licence. */}
+                        <div className="md:col-span-full text-xs text-muted-foreground space-y-1">
+              <p>FCA reference number: 808113</p>
+              <p>FSC Mauritius, Investment Dealer's Licence: GB23202701</p>
+              <p>FSC Belize, licence number: 8557559</p>
+            </div>
+
           </div>
 
           <div className="pt-8 border-t border-border">

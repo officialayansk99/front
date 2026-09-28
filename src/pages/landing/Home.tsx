@@ -25,6 +25,8 @@ import {
 import MarketBoard from "./components/home/MarketBoard";
 import MarketsTabs from "./components/home/MarketsTabs";
 import AccountComparison from "./components/home/AccountComparison";
+import Regulations from "./components/home/Regulations";
+
 
 const trustFigures = [
   { value: "50,000+", label: "Active traders" },
@@ -197,6 +199,9 @@ export default function Home() {
           </dl>
         </div>
       </section>
+            <Regulations />
+
+
 
       {/* Markets */}
       <section className="relative z-10 py-24">
