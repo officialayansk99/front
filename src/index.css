@@ -1,0 +1,343 @@
+/* Fraunces (expressive serif) carries display copy; Inter stays the "quiet sans"
+   for UI, data and long-form text — the 2026 serif/sans pairing. */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&family=Inter:wght@300..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    /* "Midnight & Sapphire" palette. Blue is the strongest trust signal in
+       finance; a cool off-white page keeps long portal sessions crisp. */
+    --background: 220 33% 97%; /* cool off-white */
+    --foreground: 222 47% 11%; /* navy ink */
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Sapphire. A deep, saturated blue used as a FILL (buttons, rules, logo)
+       with white text on top (~5.5:1, passes AA). */
+    --primary: 222 74% 51%; /* ~#245BE0 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 30% 92%;
+    --secondary-foreground: 222 40% 16%;
+
+    --muted: 220 25% 93%;
+    --muted-foreground: 220 12% 38%;
+
+    --accent: 222 60% 10%; /* midnight navy */
+    --accent-foreground: 220 40% 96%;
+
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 150 48% 30%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 35 85% 42%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 220 20% 86%;
+    --input: 220 20% 86%;
+    --ring: 222 74% 51%;
+
+    /* Deeper sapphire — the accessible brand color for small text/links on the
+       light page (kept under the legacy --gold-ink token name). */
+    --gold-ink: 224 76% 42%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 222 60% 10%; /* midnight sidebar even in light mode */
+    --sidebar-foreground: 220 25% 78%;
+    --sidebar-primary: 222 100% 70%;
+    --sidebar-primary-foreground: 222 60% 8%;
+    --sidebar-accent: 222 45% 16%;
+    --sidebar-accent-foreground: 220 40% 94%;
+    --sidebar-border: 222 40% 18%;
+    --sidebar-ring: 222 100% 70%;
+
+    --glass-bg: 0 0% 100% / 0.78;
+    --glass-border: 222 74% 51% / 0.18;
+    --glow-primary: 222 74% 51% / 0.18;
+  }
+
+  .dark {
+    color-scheme: dark;
+    /* Midnight navy base; a brighter sapphire carries the brand on dark and
+       takes navy text on top for contrast. */
+    --background: 222 60% 6%; /* midnight */
+    --foreground: 220 40% 94%;
+
+    --card: 222 50% 10%;
+    --card-foreground: 220 40% 94%;
+
+    --popover: 222 50% 10%;
+    --popover-foreground: 220 40% 94%;
+
+    /* Bright sapphire on dark, navy text on top. */
+    --primary: 222 100% 70%; /* ~#6699FF */
+    --primary-foreground: 222 60% 8%;
+
+    --secondary: 222 40% 16%;
+    --secondary-foreground: 220 40% 94%;
+
+    --muted: 222 40% 14%;
+    --muted-foreground: 220 20% 68%;
+
+    --accent: 222 40% 17%;
+    --accent-foreground: 220 40% 96%;
+
+    --destructive: 0 66% 56%;
+    --destructive-foreground: 220 40% 96%;
+
+    --success: 150 50% 46%;
+    --success-foreground: 222 60% 8%;
+
+    --warning: 38 88% 58%;
+    --warning-foreground: 222 60% 8%;
+
+    --border: 222 35% 20%;
+    --input: 222 35% 20%;
+    --ring: 222 100% 70%;
+
+    /* On dark, bright sapphire text is already high-contrast. */
+    --gold-ink: 222 100% 72%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 222 60% 5%;
+    --sidebar-foreground: 220 20% 74%;
+    --sidebar-primary: 222 100% 70%;
+    --sidebar-primary-foreground: 222 60% 8%;
+    --sidebar-accent: 222 40% 14%;
+    --sidebar-accent-foreground: 220 40% 94%;
+    --sidebar-border: 222 35% 16%;
+    --sidebar-ring: 222 100% 70%;
+
+    --glass-bg: 222 50% 10% / 0.5;
+    --glass-border: 222 100% 70% / 0.22;
+    --glow-primary: 222 100% 70% / 0.22;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased min-h-screen relative;
+    font-family: "Inter", system-ui, sans-serif;
+  }
+
+  /* Display copy: serif, tightened, optical size raised so large headings pick
+     up Fraunces' high-contrast cut rather than its text-size shapes. */
+  .font-display {
+    font-family: "Fraunces", Georgia, serif;
+    font-optical-sizing: auto;
+    font-variation-settings:
+      "opsz" 96,
+      "SOFT" 30;
+    letter-spacing: -0.02em;
+  }
+
+  /* One restrained wash instead of the previous three stacked radials — the
+     brief for 2026 finance UI is decision clarity, not ambient decoration. */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(
+      ellipse 80% 50% at 50% -10%,
+      hsl(var(--primary) / 0.1),
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+@layer utilities {
+  /* Ultra-Premium Glassmorphism */
+  .glass {
+    @apply bg-card/40 backdrop-blur-2xl border border-border/50 relative transition-all duration-500 shadow-xl;
+  }
+
+  .glass:hover {
+    @apply border-primary/20 bg-card/50 shadow-2xl;
+  }
+
+  .glass-strong {
+    @apply bg-card/80 backdrop-blur-3xl border border-border relative shadow-2xl;
+  }
+
+  .glow-primary {
+    box-shadow:
+      0 0 40px hsl(var(--primary) / 0.18),
+      0 0 80px hsl(var(--primary) / 0.08);
+  }
+
+  .glow-success {
+    box-shadow: 0 0 30px hsl(var(--success) / 0.2);
+  }
+
+  .glow-danger {
+    box-shadow: 0 0 30px hsl(var(--destructive) / 0.2);
+  }
+
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary via-primary to-primary/80;
+  }
+
+  /* Squared-off and shadow-light: the pill + scale-on-hover reads consumer-app,
+     which is the opposite of what a capital brand wants. */
+  .btn-brand {
+    @apply px-6 py-2.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm tracking-tight shadow-sm hover:bg-primary/90 transition-colors active:bg-primary;
+  }
+
+  /* Small caps-ish eyebrow label used above section headings. Uses gold-ink,
+     which is a deep gold on light backgrounds (AA-legible) and bright gold on
+     dark — unlike --primary, which is tuned as a fill, not as small text. */
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-gold-ink;
+  }
+
+  .rule {
+    @apply h-px w-full bg-border;
+  }
+
+  .gradient-primary-text {
+    @apply bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent;
+  }
+
+  .gradient-success {
+    @apply bg-gradient-to-r from-success to-success/70;
+  }
+
+  .gradient-danger {
+    @apply bg-gradient-to-r from-destructive to-destructive/70;
+  }
+
+  .gradient-warning {
+    @apply bg-gradient-to-r from-warning to-warning/70;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Hero Animations */
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes float-delayed {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-grid-fade {
+  0%,
+  100% {
+    opacity: 0.03;
+  }
+  50% {
+    opacity: 0.07;
+  }
+}
+
+.animate-ticker-scroll {
+  animation: ticker-scroll 30s linear infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 5s ease-in-out 1s infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.hero-grid-bg {
+  background-image:
+    linear-gradient(hsl(var(--primary) / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--primary) / 0.07) 1px, transparent 1px);
+  background-size: 72px 72px;
+  animation: hero-grid-fade 8s ease-in-out infinite;
+}
+
+.perspective-container {
+  perspective: 1200px;
+}
+
+.mockup-3d {
+  transform: rotateY(-8deg) rotateX(4deg);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.mockup-3d:hover {
+  transform: rotateY(-2deg) rotateX(1deg) scale(1.02);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.55);
+}
