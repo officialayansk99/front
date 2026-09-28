@@ -2,746 +2,586 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
-  Shield,
+  ArrowDown,
   Monitor,
-  Zap,
-  ChevronRight,
-  BarChart3,
-  Lock,
-  Cpu,
-  Building2,
-  HeadphonesIcon,
+  Globe,
   Smartphone,
   Play,
   X,
-  TrendingUp,
-  Award,
-  Users,
+  Zap,
+  Wallet,
+  HeadphonesIcon,
+  GraduationCap,
+  Handshake,
+  Check,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import MarketBoard from "./components/home/MarketBoard";
+import MarketsTabs from "./components/home/MarketsTabs";
+import AccountComparison from "./components/home/AccountComparison";
 
-const tickerPairs = [
-  { pair: "EUR/USD", price: "1.0842", change: "+0.12%", up: true },
-  { pair: "GBP/USD", price: "1.2654", change: "-0.08%", up: false },
-  { pair: "USD/JPY", price: "154.82", change: "+0.24%", up: true },
-  { pair: "XAU/USD", price: "2,384.50", change: "+0.67%", up: true },
-  { pair: "BTC/USD", price: "68,420", change: "+1.42%", up: true },
-  { pair: "AUD/USD", price: "0.6492", change: "-0.15%", up: false },
-  { pair: "USD/CAD", price: "1.3640", change: "+0.09%", up: true },
-  { pair: "EUR/GBP", price: "0.8568", change: "-0.04%", up: false },
+const trustFigures = [
+  { value: "50,000+", label: "Active traders" },
+  { value: "$10M+", label: "Daily volume" },
+  { value: "7", label: "Tier-1 liquidity providers" },
+  { value: "<30ms", label: "Average execution" },
+  { value: "24/5", label: "Human support" },
 ];
+
+const platformModes = {
+  desktop: {
+    icon: Monitor,
+    label: "Desktop",
+    title: "The full MT5 terminal",
+    points: [
+      "21 timeframes and 38 built-in technical indicators",
+      "Multi-threaded strategy tester for Expert Advisors",
+      "Depth of market and one-click trading",
+    ],
+  },
+  web: {
+    icon: Globe,
+    label: "Web",
+    title: "Trade from any browser",
+    points: [
+      "Nothing to install — log in and trade",
+      "Same account, orders and history as desktop",
+      "Charting and order management built in",
+    ],
+  },
+  mobile: {
+    icon: Smartphone,
+    label: "Mobile",
+    title: "Your account in your pocket",
+    points: [
+      "Native MT5 apps for iOS and Android",
+      "Price alerts, charts and full order control",
+      "Deposit and manage funds on the move",
+    ],
+  },
+} as const;
+type PlatformMode = keyof typeof platformModes;
+
+const steps = [
+  {
+    title: "Register",
+    desc: "Create your client portal login in about two minutes — name, email, phone and a password.",
+  },
+  {
+    title: "Verify",
+    desc: "Upload your ID and proof of address from the portal. Our team reviews submissions as quickly as possible.",
+  },
+  {
+    title: "Fund & trade",
+    desc: "Deposit by bank wire, card or crypto, request your MT5 account and place your first trade.",
+  },
+];
+
+const faqs = [
+  {
+    q: "How do I open an account?",
+    a: "Select “Open live account”, register for the client portal, complete verification (KYC) and request an MT5 trading account from your dashboard. We email you as soon as it is ready.",
+  },
+  {
+    q: "What is the minimum deposit?",
+    a: "It depends on the account: Micro starts at $100, Min at $500, Standard at $1,000, ECN at $5,000 and Islamic at $10,000. See the comparison table above for the full terms.",
+  },
+  {
+    q: "Which platform do you offer?",
+    a: "Every account trades on MetaTrader 5 — on desktop, in the browser and on iOS and Android.",
+  },
+  {
+    q: "How do deposits and withdrawals work?",
+    a: "Fund by bank wire, credit/debit card or cryptocurrency from the Funds section of the portal. Withdrawals go back to the method you deposited with and are processed by our finance team, typically within 24 business hours once your account is verified.",
+  },
+  {
+    q: "Is there a swap-free account?",
+    a: "Yes. The Islamic account is swap-free and otherwise trades on the same raw pricing as our other accounts.",
+  },
+  {
+    q: "What leverage can I use?",
+    a: "Maximum leverage ranges from 1:400 on Micro up to 1:2000 on ECN and Islamic. Leverage magnifies losses as well as gains — choose a level that fits your experience and risk tolerance.",
+  },
+];
+
+const fadeUp = {
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.55 },
+};
 
 export default function Home() {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [platformMode, setPlatformMode] = useState<PlatformMode>("desktop");
+  const activeMode = platformModes[platformMode];
 
   return (
     <div className="bg-background text-foreground overflow-hidden">
       {/* ════════════════════════════════════════════════════════════
-          HERO SECTION — Premium Fintech Design
+          HERO — centred statement over a market board. No split layout,
+          no mockup: the prices are the picture.
       ════════════════════════════════════════════════════════════ */}
-      <section className="relative z-10 min-h-[calc(100vh-80px)] flex flex-col">
-        {/* Background: a schematic grid plus one wash. The previous three
-            stacked blur-blobs fought the copy for attention. */}
+      <section className="relative z-10 pt-10 pb-16 lg:pt-16">
         <div className="absolute inset-0 hero-grid-bg pointer-events-none" />
-        <div className="absolute top-[-25%] right-[-15%] w-[720px] h-[720px] bg-primary/10 rounded-full blur-[160px] pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <p className="eyebrow mb-6">
+              Forex · Commodities · Stocks · Crypto — on MetaTrader 5
+            </p>
+            <h1 className="font-display text-[2.5rem] sm:text-6xl lg:text-7xl font-semibold leading-[1.02] mb-6 text-balance">
+              Raw spreads. <span className="text-gold-ink italic">Real</span>{" "}
+              execution.
+            </h1>
+            <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto mb-9 leading-relaxed">
+              Trade global markets from 0.0 pips with fills under 30ms and no
+              dealing desk — priced by seven Tier-1 liquidity providers.
+            </p>
 
-        {/* Main hero content */}
-        <div className="flex-1 flex items-center">
-          <div className="max-w-7xl mx-auto px-6 w-full pt-8 pb-12 lg:pt-0 lg:pb-0">
-            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 xl:gap-20 items-center">
-              {/* Left — Copy */}
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mb-6">
+              <Link to="/login?mode=register" className="btn-cta group">
+                Open live account
+                <ArrowRight
+                  size={18}
+                  className="group-hover:translate-x-0.5 transition-transform"
+                />
+              </Link>
+              <a
+                href="#accounts"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md border border-border bg-card/60 hover:border-primary/50 text-foreground font-semibold transition-colors"
               >
-                {/* Rule + eyebrow, in place of the old glowing pill badge */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="flex items-center gap-3 mb-7"
-                >
-                  <span className="h-px w-8 bg-primary/50" />
-                  <span className="eyebrow">
-                    Multi-asset trading · MetaTrader 5
-                  </span>
-                </motion.div>
-
-                <h1 className="font-display text-[2.6rem] sm:text-5xl lg:text-[3.4rem] xl:text-[4rem] font-semibold leading-[1.03] mb-7 text-balance">
-                  Trade forex with raw spreads from{" "}
-                  <span className="text-primary">0.0</span> pips
-                </h1>
-
-                <p className="text-base md:text-lg text-muted-foreground mb-10 max-w-xl leading-relaxed">
-                  Institutional-grade execution for active retail traders.
-                  Ultra-low spreads, &lt;30ms fills, and zero dealing desk
-                  intervention — powered by Tier-1 liquidity.
-                </p>
-
-                {/* CTAs */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-10">
-                  <Link
-                    to="/login"
-                    className="px-8 py-3.5 rounded-md bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base shadow-sm transition-colors flex items-center justify-center gap-2.5 group"
-                  >
-                    Open live account
-                    <ArrowRight
-                      size={18}
-                      className="group-hover:translate-x-0.5 transition-transform"
-                    />
-                  </Link>
-                  <button
-                    onClick={() => setIsVideoOpen(true)}
-                    className="px-8 py-3.5 rounded-md bg-transparent border border-border hover:border-primary/50 hover:bg-card/60 text-foreground font-semibold text-base transition-colors flex items-center justify-center gap-2.5 group cursor-pointer"
-                  >
-                    <span className="w-7 h-7 rounded-full border border-primary/40 group-hover:bg-primary/10 flex items-center justify-center transition-colors">
-                      <Play size={11} className="text-primary ml-0.5" />
-                    </span>
-                    Watch tutorial
-                  </button>
-                </div>
-
-                {/* Inline trust metrics, set above a rule as a data row rather
-                    than a line of ticked bullets */}
-                <div className="max-w-xl">
-                  <div className="rule mb-5" />
-                  <div className="flex flex-wrap items-baseline gap-x-10 gap-y-4">
-                    {[
-                      { value: "50,000+", label: "Active traders" },
-                      { value: "$10M+", label: "Daily volume" },
-                      { value: "24/5", label: "Support" },
-                    ].map((stat) => (
-                      <div key={stat.label} className="flex flex-col gap-0.5">
-                        <span className="font-display text-2xl font-semibold text-foreground">
-                          {stat.value}
-                        </span>
-                        <span className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
-                          {stat.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Right — 3D Platform Mockup */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.92, y: 30 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{
-                  duration: 1,
-                  delay: 0.3,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="relative hidden lg:block"
-              >
-                <div className="perspective-container">
-                  {/* Glow behind mockup */}
-                  <div className="absolute inset-0 bg-primary/15 blur-[80px] rounded-full scale-110 animate-glow-pulse" />
-
-                  {/* Main mockup */}
-                  <div className="mockup-3d relative z-10 rounded-2xl overflow-hidden border border-border/60 shadow-2xl shadow-primary/10 bg-card">
-                    <img
-                      src="/platform-mockup.svg"
-                      alt="Equiti Capitals MetaTrader 5 Platform"
-                      className="w-full h-auto"
-                    />
-                    {/* Gradient overlay for depth */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent pointer-events-none" />
-                  </div>
-                </div>
-
-                {/* Floating Card — Spread */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.8, duration: 0.7 }}
-                  className="absolute -left-8 xl:-left-14 top-[20%] z-20 animate-float-slow"
-                >
-                  <div className="glass-strong rounded-2xl p-5 w-56 shadow-2xl">
-                    <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold mb-1">
-                      Spreads from
-                    </p>
-                    <h3 className="text-3xl font-black text-foreground mb-2 tracking-tight">
-                      0.0{" "}
-                      <span className="text-lg font-bold text-muted-foreground">
-                        pips
-                      </span>
-                    </h3>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                      No Dealing Desk
-                    </div>
-                    <div className="h-10 w-full rounded-lg bg-primary/5 overflow-hidden">
-                      <svg
-                        width="100%"
-                        height="100%"
-                        preserveAspectRatio="none"
-                        viewBox="0 0 200 40"
-                      >
-                        <defs>
-                          <linearGradient
-                            id="heroChartGrad"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                          >
-                            <stop
-                              offset="0%"
-                              stopColor="hsl(var(--primary))"
-                              stopOpacity="0.25"
-                            />
-                            <stop
-                              offset="100%"
-                              stopColor="hsl(var(--primary))"
-                              stopOpacity="0"
-                            />
-                          </linearGradient>
-                        </defs>
-                        <polygon
-                          points="0,32 8,28 18,30 30,22 42,25 55,14 68,18 80,10 95,16 108,8 120,12 135,6 148,9 162,4 178,7 192,3 200,5 200,40 0,40"
-                          fill="url(#heroChartGrad)"
-                        />
-                        <polyline
-                          points="0,32 8,28 18,30 30,22 42,25 55,14 68,18 80,10 95,16 108,8 120,12 135,6 148,9 162,4 178,7 192,3 200,5"
-                          fill="none"
-                          stroke="hsl(var(--primary))"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <circle
-                          cx="200"
-                          cy="5"
-                          r="2.5"
-                          fill="hsl(var(--primary))"
-                        />
-                        <circle
-                          cx="200"
-                          cy="5"
-                          r="5"
-                          fill="hsl(var(--primary))"
-                          opacity="0.2"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Floating Card — Execution Speed */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1, duration: 0.7 }}
-                  className="absolute -right-6 xl:-right-10 bottom-[15%] z-20 animate-float-delayed"
-                >
-                  <div className="glass-strong rounded-2xl p-5 w-52 shadow-2xl">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
-                        <Zap size={20} className="text-emerald-500" />
-                      </div>
-                      <div>
-                        <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">
-                          Execution
-                        </p>
-                        <p className="text-xl font-black text-foreground">
-                          &lt;30ms
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-muted-foreground">Fill Rate</span>
-                      <span className="font-bold text-emerald-500">99.9%</span>
-                    </div>
-                    <div className="mt-2 h-1.5 bg-muted rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: "99.9%" }}
-                        transition={{
-                          delay: 1.5,
-                          duration: 1.2,
-                          ease: "easeOut",
-                        }}
-                        className="h-full bg-emerald-500 rounded-full"
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Floating Card — Leverage */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2, duration: 0.7 }}
-                  className="absolute -right-4 xl:-right-8 top-[8%] z-20"
-                >
-                  <div className="glass-strong rounded-xl px-4 py-3 shadow-xl flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <TrendingUp size={16} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-[9px] uppercase tracking-widest text-muted-foreground font-bold">
-                        Leverage
-                      </p>
-                      <p className="text-base font-black text-foreground">
-                        Up to 1:2000
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
+                Compare accounts <ArrowDown size={16} />
+              </a>
             </div>
+
+            <p className="text-xs text-muted-foreground">
+              From $100 to start · Swap-free Islamic account · 24/5 support
+            </p>
+          </motion.div>
+
+          <div className="mt-14">
+            <MarketBoard />
           </div>
         </div>
+      </section>
 
-        {/* Scrolling Live Ticker */}
-        <div className="relative z-20 border-t border-b border-border/50 bg-card/40 backdrop-blur-md py-3 overflow-hidden">
-          <div className="flex animate-ticker-scroll whitespace-nowrap">
-            {[...tickerPairs, ...tickerPairs].map((t, i) => (
-              <div key={i} className="flex items-center gap-6 mx-8">
-                <span className="font-bold text-sm text-foreground">
-                  {t.pair}
-                </span>
-                <span className="text-sm text-muted-foreground">{t.price}</span>
-                <span
-                  className={`text-xs font-bold ${t.up ? "text-emerald-500" : "text-red-500"}`}
-                >
-                  {t.change}
-                </span>
+      {/* Trust figures — one bordered row, not an icon banner */}
+      <section className="relative z-10 border-y border-border bg-card">
+        <div className="max-w-7xl mx-auto px-6">
+          <dl className="grid grid-cols-2 md:grid-cols-5">
+            {trustFigures.map((f, i) => (
+              <div
+                key={f.label}
+                className={`py-7 px-4 text-center ${i > 0 ? "md:border-l border-border" : ""} ${i === 4 ? "col-span-2 md:col-span-1" : ""}`}
+              >
+                <dt className="sr-only">{f.label}</dt>
+                <dd className="font-display text-3xl font-semibold text-foreground">
+                  {f.value}
+                </dd>
+                <dd className="mt-1 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                  {f.label}
+                </dd>
               </div>
             ))}
-          </div>
+          </dl>
         </div>
       </section>
 
-      {/* Stats Banner */}
-      <section className="bg-accent py-8 relative z-20">
+      {/* Markets */}
+      <section className="relative z-10 py-24">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 gap-y-8 text-primary-foreground">
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Building2 className="text-primary" size={22} />
-              </div>
-              <div>
-                <h4 className="font-black text-lg">$10M+</h4>
-                <p className="text-[11px] text-primary-foreground/70">
-                  Daily Volume
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Users className="text-primary" size={22} />
-              </div>
-              <div>
-                <h4 className="font-black text-lg">50,000+</h4>
-                <p className="text-[11px] text-primary-foreground/70">
-                  Active Traders
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Shield className="text-primary" size={22} />
-              </div>
-              <div>
-                <h4 className="font-black text-lg">7</h4>
-                <p className="text-[11px] text-primary-foreground/70">
-                  Tier-1 Liquidity
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Award className="text-primary" size={22} />
-              </div>
-              <div>
-                <h4 className="font-black text-lg">MT5</h4>
-                <p className="text-[11px] text-primary-foreground/70">
-                  Trading Platform
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
-                <HeadphonesIcon className="text-primary" size={22} />
-              </div>
-              <div>
-                <h4 className="font-black text-lg">24/5</h4>
-                <p className="text-[11px] text-primary-foreground/70">
-                  Customer Support
-                </p>
-              </div>
-            </div>
-          </div>
+          <motion.div {...fadeUp} className="max-w-2xl mb-10">
+            <p className="eyebrow mb-3">Markets</p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold leading-[1.08]">
+              One account. Every market that matters.
+            </h2>
+          </motion.div>
+          <MarketsTabs />
         </div>
       </section>
 
-      <div className="bg-muted/10">
-        <div className="max-w-7xl mx-auto px-6 py-24">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-primary font-bold tracking-wider uppercase text-xs mb-3 block"
-            >
-              Why Choose Equiti Capitals
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="font-display text-3xl md:text-5xl font-semibold text-foreground leading-[1.08] mb-6"
-            >
-              Built for Traders. Backed by Technology.
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-muted-foreground text-lg leading-relaxed"
-            >
-              Experience the ultimate trading environment designed to give you
-              the competitive edge in the global markets.
-            </motion.p>
-          </div>
+      {/* Accounts */}
+      <section
+        id="accounts"
+        className="relative z-10 py-24 border-t border-border scroll-mt-8"
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            {...fadeUp}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10"
+          >
+            <div className="max-w-2xl">
+              <p className="eyebrow mb-3">Accounts</p>
+              <h2 className="font-display text-4xl md:text-5xl font-semibold leading-[1.08]">
+                Compare accounts side by side
+              </h2>
+            </div>
+            <p className="text-muted-foreground max-w-sm">
+              Every account gets raw spreads and MetaTrader 5. Pick the one that
+              matches your deposit and trade size.
+            </p>
+          </motion.div>
+          <motion.div {...fadeUp}>
+            <AccountComparison />
+          </motion.div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Platform — the one dark band on the page */}
+      <section className="relative z-10 bg-accent text-accent-foreground py-24 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-[560px] h-[560px] rounded-full bg-copper/10 blur-[140px] pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-14 items-center">
+          <motion.div {...fadeUp}>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-copper mb-3">
+              Platform
+            </p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold leading-[1.08] mb-6">
+              MetaTrader 5, wherever you trade
+            </h2>
+
+            <div
+              role="tablist"
+              aria-label="Platform versions"
+              className="inline-flex rounded-lg border border-accent-foreground/15 p-1 mb-8"
+            >
+              {(Object.keys(platformModes) as PlatformMode[]).map((key) => {
+                const m = platformModes[key];
+                const Icon = m.icon;
+                const active = key === platformMode;
+                return (
+                  <button
+                    key={key}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => setPlatformMode(key)}
+                    className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition-colors ${active ? "bg-copper text-copper-foreground" : "text-accent-foreground/70 hover:text-accent-foreground"}`}
+                  >
+                    <Icon size={15} /> {m.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={platformMode}
+                role="tabpanel"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+                className="mb-10"
+              >
+                <h3 className="text-xl font-semibold mb-4">
+                  {activeMode.title}
+                </h3>
+                <ul className="space-y-3">
+                  {activeMode.points.map((p) => (
+                    <li
+                      key={p}
+                      className="flex gap-3 text-accent-foreground/80"
+                    >
+                      <Check
+                        size={18}
+                        className="text-copper shrink-0 mt-0.5"
+                      />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </AnimatePresence>
+
+            <div className="flex flex-wrap gap-3">
+              <Link to="/platform" className="btn-cta">
+                Explore the platform <ArrowRight size={18} />
+              </Link>
+              <button
+                onClick={() => setIsVideoOpen(true)}
+                className="inline-flex items-center gap-2.5 rounded-md border border-accent-foreground/20 px-6 py-3.5 font-semibold hover:bg-accent-foreground/5 transition-colors"
+              >
+                <Play size={14} className="text-copper" /> Watch tutorial
+              </button>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="relative"
+          >
+            <div className="rounded-2xl border border-accent-foreground/15 bg-accent-foreground/5 p-2 shadow-2xl">
+              <div className="flex items-center gap-1.5 px-3 py-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-accent-foreground/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-accent-foreground/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-accent-foreground/20" />
+                <span className="ml-auto text-[11px] font-semibold tracking-wider text-accent-foreground/60">
+                  MetaTrader 5
+                </span>
+              </div>
+              <img
+                src="/platform-mockup.svg"
+                alt="Equiti Capitals MetaTrader 5 platform"
+                className="w-full h-auto rounded-xl"
+              />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Bento — asymmetric grid of the things traders ask about next */}
+      <section className="relative z-10 py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div {...fadeUp} className="max-w-2xl mb-10">
+            <p className="eyebrow mb-3">Why Equiti Capitals</p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold leading-[1.08]">
+              Built around the trade, not the sales pitch
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 md:grid-rows-2 gap-4">
+            <motion.div
+              {...fadeUp}
+              className="md:row-span-2 rounded-2xl bg-primary text-primary-foreground p-8 flex flex-col"
+            >
+              <Zap size={26} className="mb-6 opacity-90" />
+              <h3 className="font-display text-3xl font-semibold mb-3">
+                Execution you can measure
+              </h3>
+              <p className="opacity-80 leading-relaxed mb-8">
+                Orders route straight to Tier-1 liquidity with no dealing desk
+                and no requotes — fewer surprises when the market moves fast.
+              </p>
+              <div className="mt-auto grid grid-cols-2 gap-4 border-t border-primary-foreground/20 pt-6">
+                <div>
+                  <p className="font-mono text-3xl font-semibold">&lt;30ms</p>
+                  <p className="text-xs uppercase tracking-wider opacity-70 mt-1">
+                    Execution
+                  </p>
+                </div>
+                <div>
+                  <p className="font-mono text-3xl font-semibold">99.9%</p>
+                  <p className="text-xs uppercase tracking-wider opacity-70 mt-1">
+                    Fill rate
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              {...fadeUp}
+              className="md:col-span-2 rounded-2xl border border-border bg-card p-8"
+            >
+              <Wallet size={24} className="text-gold-ink mb-5" />
+              <h3 className="text-xl font-semibold mb-4">Fund your way</h3>
+              <div className="grid sm:grid-cols-3 gap-3">
+                {[
+                  {
+                    name: "Bank wire",
+                    time: "1–3 business days",
+                    fee: "Zero fees",
+                  },
+                  {
+                    name: "Credit / debit card",
+                    time: "Instant",
+                    fee: "Zero fees",
+                  },
+                  {
+                    name: "Cryptocurrency",
+                    time: "Instant*",
+                    fee: "Network fees only",
+                  },
+                ].map((m) => (
+                  <div key={m.name} className="rounded-xl bg-muted p-4">
+                    <p className="font-semibold text-sm text-foreground">
+                      {m.name}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {m.time}
+                    </p>
+                    <p className="text-xs font-semibold text-success mt-2">
+                      {m.fee}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[11px] text-muted-foreground mt-3">
+                *Network dependent.{" "}
+                <Link
+                  to="/how-to-deposit"
+                  className="text-gold-ink hover:underline"
+                >
+                  How to deposit
+                </Link>
+              </p>
+            </motion.div>
+
             {[
               {
-                icon: <BarChart3 size={24} />,
-                title: "Raw Spreads from 0.0 pips",
-                desc: "Access interbank liquidity with ultra-low spreads ensuring you get the best possible pricing on every trade.",
+                icon: HeadphonesIcon,
+                title: "24/5 human support",
+                desc: "Real people, whenever the markets are open.",
+                to: "/contact",
+                cta: "Contact us",
               },
               {
-                icon: <Zap size={24} />,
-                title: "Fast Execution",
-                desc: "Orders executed in <30ms with no requotes, minimizing slippage on your trades during extreme volatility.",
+                icon: Handshake,
+                title: "Partner with us",
+                desc: "Introducing brokers and affiliates earn on every referral.",
+                to: "/ib",
+                cta: "Partner programme",
               },
-              {
-                icon: <Lock size={24} />,
-                title: "Secure Accounts",
-                desc: "Encrypted connections, verified identities and secure account access keep your trading account protected.",
-              },
-              {
-                icon: <Cpu size={24} />,
-                title: "Advanced Platforms",
-                desc: "Trade seamlessly across desktop and mobile using the industry-leading MetaTrader 5 (MT5) platform.",
-              },
-            ].map((feat, i) => (
+            ].map((t) => (
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-card border border-border rounded-3xl p-8 shadow-sm hover:shadow-xl hover:border-blue-500/30 transition-all duration-300 group flex flex-col"
+                key={t.title}
+                {...fadeUp}
+                className="rounded-2xl border border-border bg-card p-8 flex flex-col"
               >
-                <div className="bg-blue-500/10 p-4 rounded-2xl text-primary w-fit mb-6 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-primary-foreground transition-all duration-300">
-                  {feat.icon}
-                </div>
-                <h3 className="font-bold text-xl text-foreground mb-3">
-                  {feat.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed flex-grow">
-                  {feat.desc}
-                </p>
+                <t.icon size={24} className="text-gold-ink mb-5" />
+                <h3 className="text-xl font-semibold mb-2">{t.title}</h3>
+                <p className="text-sm text-muted-foreground mb-5">{t.desc}</p>
+                <Link
+                  to={t.to}
+                  className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-gold-ink hover:underline"
+                >
+                  {t.cta} <ArrowRight size={15} />
+                </Link>
               </motion.div>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Premium MT5 Showcase Section */}
-      <section className="py-32 px-6 relative overflow-hidden border-t border-border/50">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none opacity-50" />
-
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] uppercase tracking-[0.2em] font-black mb-8">
-                Institutional Technology
-              </div>
-              <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6 text-foreground leading-[1.08]">
-                Master the Markets with <br />
-                <span className="gradient-primary-text">MetaTrader 5</span>
-              </h2>
-              <p className="text-muted-foreground text-lg mb-10 leading-relaxed max-w-xl">
-                Experience the world's most powerful trading platform, optimized
-                for Equiti Capitals's ultra-low latency infrastructure. Get
-                advanced technical analysis, algorithmic trading, and superior
-                execution.
+          <motion.div
+            {...fadeUp}
+            className="mt-4 rounded-2xl border border-border bg-card p-8 flex flex-col md:flex-row md:items-center gap-5"
+          >
+            <GraduationCap size={28} className="text-gold-ink shrink-0" />
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold">Learn as you trade</h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Trading calculators, platform guides and market explainers to
+                sharpen every decision.
               </p>
-
-              <div className="grid sm:grid-cols-2 gap-6 mb-12">
-                <div className="p-5 rounded-2xl bg-card border border-border/50 shadow-sm hover:shadow-md transition-all">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
-                    <Monitor size={20} />
-                  </div>
-                  <h4 className="font-bold mb-2">Desktop Power</h4>
-                  <p className="text-xs text-muted-foreground">
-                    Advanced charting and multi-threaded strategy testing for
-                    professionals.
-                  </p>
-                </div>
-                <div className="p-5 rounded-2xl bg-card border border-border/50 shadow-sm hover:shadow-md transition-all">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-4">
-                    <Smartphone size={20} />
-                  </div>
-                  <h4 className="font-bold mb-2">Mobile Freedom</h4>
-                  <p className="text-xs text-muted-foreground">
-                    Trade anytime, anywhere with full account management on iOS
-                    and Android.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  to="/platform"
-                  className="btn-brand h-12 px-8 flex items-center gap-2"
-                >
-                  Get Started <ArrowRight size={18} />
-                </Link>
-                <Link
-                  to="/platform"
-                  className="px-8 h-12 rounded-full border border-border hover:bg-muted transition-all font-bold text-sm flex items-center gap-2"
-                >
-                  Learn Features
-                </Link>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative"
+            </div>
+            <Link
+              to="/tools"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-ink hover:underline"
             >
-              <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full" />
-              <div className="relative glass p-4 rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                <div className="relative rounded-[2rem] overflow-hidden bg-slate-900 aspect-video flex items-center justify-center">
-                  <img
-                    src="/mt5-logo.png"
-                    alt="MT5"
-                    className="w-48 opacity-80 drop-shadow-2xl"
-                  />
-                </div>
-              </div>
+              Trading tools <ArrowRight size={15} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
 
-              {/* Floating Stat Card */}
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="absolute -right-8 -bottom-8 bg-card border border-border p-6 rounded-2xl shadow-2xl z-20 max-w-[200px]"
-              >
-                <div className="text-primary font-black text-2xl mb-1">21+</div>
-                <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">
-                  Timeframes for Analysis
-                </div>
-              </motion.div>
-            </motion.div>
+      {/* Three steps — large numerals joined by a rule */}
+      <section className="relative z-10 py-24 border-t border-border bg-card">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            {...fadeUp}
+            className="text-center max-w-2xl mx-auto mb-14"
+          >
+            <p className="eyebrow mb-3">Getting started</p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold leading-[1.08]">
+              Live in three steps
+            </h2>
+          </motion.div>
+
+          <div className="relative">
+            <div
+              className="hidden md:block absolute top-9 left-[16%] right-[16%] h-px bg-border"
+              aria-hidden="true"
+            />
+            <ol className="relative grid md:grid-cols-3 gap-10 md:gap-8">
+              {steps.map((s, i) => (
+                <motion.li
+                  key={s.title}
+                  {...fadeUp}
+                  transition={{ duration: 0.55, delay: i * 0.12 }}
+                  className="relative text-center"
+                >
+                  <span className="relative mx-auto mb-6 flex h-[72px] w-[72px] items-center justify-center rounded-full border border-border bg-background font-display text-4xl font-semibold text-gold-ink">
+                    {i + 1}
+                  </span>
+                  <h3 className="text-xl font-semibold mb-2">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                    {s.desc}
+                  </p>
+                </motion.li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
 
-      {/* Account Types */}
-      <section className="relative z-10 py-24 px-6 max-w-7xl mx-auto border-t border-border">
-        <div className="text-center mb-16">
-          <span className="text-primary font-bold tracking-wider uppercase text-sm mb-4 block">
-            Your Money, Your Control
-          </span>
-          <h2 className="font-display text-4xl md:text-5xl font-semibold mb-6 text-foreground">
-            Trading Accounts
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Choose the perfect account type that matches your trading style and
-            experience.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          {[
-            {
-              name: "Micro",
-              min: "$100",
-              spread: "RAW",
-              lev: "1:400",
-              minTrade: "0.01 lot",
-              swap: "No",
-              color: "from-blue-500/20",
-            },
-            {
-              name: "Min",
-              min: "$500",
-              spread: "RAW",
-              lev: "1:1000",
-              minTrade: "0.01 lot",
-              swap: "No",
-              color: "from-cyan-500/20",
-            },
-            {
-              name: "Standard",
-              min: "$1,000",
-              spread: "RAW",
-              lev: "1:1200",
-              minTrade: "0.01 lot",
-              swap: "No",
-              color: "from-purple-500/20",
-              popular: true,
-            },
-            {
-              name: "ECN",
-              min: "$5,000",
-              spread: "RAW",
-              lev: "1:2000",
-              minTrade: "0.10 lot",
-              swap: "No",
-              color: "from-pink-500/20",
-            },
-            {
-              name: "Islamic",
-              min: "$10,000",
-              spread: "RAW",
-              lev: "1:2000",
-              minTrade: "0.10 lot",
-              swap: "No",
-              color: "from-emerald-500/20",
-            },
-          ].map((acc, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className={`relative p-6 rounded-3xl bg-card border ${acc.popular ? "border-primary ring-1 ring-primary/20" : "border-border"} hover:border-primary/50 transition-all group overflow-hidden shadow-sm hover:shadow-xl`}
+      {/* FAQ */}
+      <section className="relative z-10 py-24">
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-[1fr_1.6fr] gap-12">
+          <motion.div {...fadeUp}>
+            <p className="eyebrow mb-3">FAQ</p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold leading-[1.08] mb-5">
+              Questions, answered
+            </h2>
+            <p className="text-muted-foreground mb-6">
+              Can't find what you need? Our team is on hand 24/5.
+            </p>
+            <a
+              href="mailto:support@equiticapitals.com"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-gold-ink hover:underline"
             >
-              {acc.popular && (
-                <div className="absolute top-0 inset-x-0 h-1 bg-primary" />
-              )}
-              <div
-                className={`absolute top-0 left-0 w-full h-32 bg-gradient-to-b ${acc.color} to-transparent opacity-20 pointer-events-none`}
-              />
-
-              <h3 className="text-2xl font-bold mb-1 relative z-10 text-foreground">
-                {acc.name}
-              </h3>
-              <div className="text-3xl font-black mb-6 relative z-10 text-primary">
-                {acc.min}
-              </div>
-
-              <ul className="space-y-4 mb-8 relative z-10">
-                <li className="flex items-center text-sm text-muted-foreground">
-                  <span className="text-primary mr-2 font-bold">✓</span> Spread:{" "}
-                  {acc.spread}
-                </li>
-                <li className="flex items-center text-sm text-muted-foreground">
-                  <span className="text-primary mr-2 font-bold">✓</span>{" "}
-                  Leverage Up to {acc.lev}
-                </li>
-                <li className="flex items-center text-sm text-muted-foreground">
-                  <span className="text-primary mr-2 font-bold">✓</span>{" "}
-                  MetaTrader 5 (MT5)
-                </li>
-                <li className="flex items-center text-sm text-muted-foreground">
-                  <span className="text-primary mr-2 font-bold">✓</span> Min
-                  Trade: {acc.minTrade}
-                </li>
-                <li className="flex items-center text-sm text-muted-foreground">
-                  <span className="text-primary mr-2 font-bold">✓</span> Swap:{" "}
-                  {acc.swap}
-                </li>
-              </ul>
-
-              <Link
-                to="/login"
-                className={`block w-full py-3 rounded-xl text-center font-bold transition-all relative z-10 ${acc.popular ? "bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20" : "bg-muted hover:bg-muted/80 text-foreground border border-border"}`}
-              >
-                Open Account
-              </Link>
-            </motion.div>
-          ))}
+              support@equiticapitals.com <ArrowRight size={15} />
+            </a>
+          </motion.div>
+          <motion.div {...fadeUp}>
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((f, i) => (
+                <AccordionItem key={f.q} value={`faq-${i}`}>
+                  <AccordionTrigger className="text-left text-base font-semibold hover:no-underline">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed">
+                    {f.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </motion.div>
         </div>
       </section>
 
-      {/* Latest Offers & News */}
-      <section className="relative z-10 py-24 px-6 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div>
-            <h2 className="text-4xl font-bold mb-4 text-foreground">
-              Latest Updates & Offers
+      {/* Closing call to action */}
+      <section className="relative z-10 px-6 pb-24">
+        <motion.div
+          {...fadeUp}
+          className="max-w-7xl mx-auto rounded-3xl bg-gradient-to-br from-primary to-accent text-primary-foreground px-8 py-16 md:px-16 flex flex-col md:flex-row md:items-center justify-between gap-8"
+        >
+          <div className="max-w-xl">
+            <h2 className="font-display text-4xl md:text-5xl font-semibold leading-[1.08] mb-4">
+              Ready when the market is.
             </h2>
-            <p className="text-muted-foreground text-lg">
-              Stay informed with the latest promotions and market insights.
+            <p className="opacity-80 text-lg">
+              Open your account today and trade raw spreads on MetaTrader 5.
             </p>
           </div>
-          <a
-            href="#"
-            className="flex items-center gap-2 text-primary font-semibold hover:underline transition-all"
-          >
-            View All <ArrowRight size={18} />
-          </a>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              title: "Refer Now & earn up to 50%",
-              desc: "Equiti Capitals is excited to introduce a lucrative referral program designed for our loyal partners...",
-            },
-            {
-              title: "Bull or Bear? Ask Your Master",
-              desc: "Equiti Capitals offers expert guidance and advanced trading tools to help you navigate both bull and bear markets...",
-            },
-            {
-              title: "Trade Big with Up to 100% Credit",
-              desc: "Equiti Capitals is introducing an innovative scheme designed to double your trading power instantly...",
-            },
-            {
-              title: "Smarter Trading Opportunities With Equiti Capitals",
-              desc: "Discover practical tools, flexible account choices, and market-focused support designed to help you trade with more confidence.",
-            },
-          ].map((news, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="p-6 rounded-3xl bg-card border border-border hover:shadow-lg transition-all flex flex-col shadow-sm"
-            >
-              <h3 className="text-lg font-bold mb-3 leading-tight text-foreground">
-                {news.title}
-              </h3>
-              <p className="text-muted-foreground text-sm mb-6 flex-grow">
-                {news.desc}
-              </p>
-              <a
-                href="#"
-                className="flex items-center gap-1 text-sm font-bold text-primary hover:underline transition-all mt-auto"
-              >
-                Read More <ChevronRight size={16} />
-              </a>
-            </motion.div>
-          ))}
-        </div>
+          <Link to="/login?mode=register" className="btn-cta shrink-0 group">
+            Open live account
+            <ArrowRight
+              size={18}
+              className="group-hover:translate-x-0.5 transition-transform"
+            />
+          </Link>
+        </motion.div>
       </section>
 
       {/* Video Tutorial Modal */}
@@ -764,6 +604,7 @@ export default function Home() {
             >
               <button
                 onClick={() => setIsVideoOpen(false)}
+                aria-label="Close video"
                 className="absolute -top-12 right-0 text-white/80 hover:text-white transition-colors z-10"
               >
                 <X size={28} />

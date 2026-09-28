@@ -92,7 +92,7 @@
     <line x1="940" y1="108" x2="940" y2="126" stroke="#00e896" stroke-width="1"/><rect x="935" y="110" width="10" height="11" rx="1" fill="#00e896"/>
   </g>
   <!-- MA line -->
-  <polyline points="230,370 270,340 310,320 350,280 390,255 430,245 470,215 510,195 550,175 590,155 630,142 670,135 710,125 750,120 790,118 830,115 870,112 910,110 950,108" fill="none" stroke="#6699ff" stroke-width="1.5" opacity="0.7" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="230,370 270,340 310,320 350,280 390,255 430,245 470,215 510,195 550,175 590,155 630,142 670,135 710,125 750,120 790,118 830,115 870,112 910,110 950,108" fill="none" stroke="#F0955A" stroke-width="1.5" opacity="0.7" stroke-linecap="round" stroke-linejoin="round"/>
   <!-- Right panel: order/trade -->
   <rect x="950" y="106" width="160" height="310" fill="#0d0d11"/>
   <text x="1030" y="130" font-family="Arial" font-size="10" font-weight="bold" fill="#6c6c74" text-anchor="middle">NEW ORDER</text>

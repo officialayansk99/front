@@ -1,6 +1,6 @@
 /* Fraunces (expressive serif) carries display copy; Inter stays the "quiet sans"
    for UI, data and long-form text — the 2026 serif/sans pairing. */
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&family=Inter:wght@300..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&family=Inter:wght@300..900&family=JetBrains+Mono:wght@400..700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -9,120 +9,130 @@
 @layer base {
   :root {
     color-scheme: light;
-    /* "Midnight & Sapphire" palette. Blue is the strongest trust signal in
-       finance; a cool off-white page keeps long portal sessions crisp. */
-    --background: 220 33% 97%; /* cool off-white */
-    --foreground: 222 47% 11%; /* navy ink */
+    /* "Plum & Copper" palette. Deep plum carries the brand as a fill, copper is
+       reserved for the primary call-to-action, and a cool porcelain page keeps
+       long portal sessions crisp. Deliberately no blue, navy or teal: those
+       belong to sibling brands and to an unrelated broker with a similar name. */
+    --background: 280 14% 97%; /* porcelain #F8F7F9 */
+    --foreground: 283 26% 10%; /* aubergine ink #1A1320 */
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 283 26% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 283 26% 10%;
 
-    /* Sapphire. A deep, saturated blue used as a FILL (buttons, rules, logo)
-       with white text on top (~5.5:1, passes AA). */
-    --primary: 222 74% 51%; /* ~#245BE0 */
+    /* Plum. Used as a FILL (buttons, rules, logo) with white text on top
+       (~10:1, passes AA). */
+    --primary: 311 55% 27%; /* #6A1F5C */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 30% 92%;
-    --secondary-foreground: 222 40% 16%;
+    /* Copper. The call-to-action colour; takes DARK text only — white on
+       copper fails contrast. */
+    --copper: 24 68% 54%; /* #D9793B */
+    --copper-foreground: 283 26% 10%;
 
-    --muted: 220 25% 93%;
-    --muted-foreground: 220 12% 38%;
+    --secondary: 280 16% 93%;
+    --secondary-foreground: 283 30% 16%;
 
-    --accent: 222 60% 10%; /* midnight navy */
-    --accent-foreground: 220 40% 96%;
+    --muted: 280 14% 94%;
+    --muted-foreground: 275 8% 42%; /* #6E6475 */
 
-    --destructive: 0 70% 45%;
+    --accent: 285 40% 10%; /* deep aubergine, used for dark bands */
+    --accent-foreground: 290 30% 96%;
+
+    --destructive: 4 65% 54%; /* #D6453D */
     --destructive-foreground: 0 0% 100%;
 
-    --success: 150 48% 30%;
+    --success: 156 67% 37%; /* #1F9D6B */
     --success-foreground: 0 0% 100%;
 
     --warning: 35 85% 42%;
     --warning-foreground: 0 0% 100%;
 
-    --border: 220 20% 86%;
-    --input: 220 20% 86%;
-    --ring: 222 74% 51%;
+    --border: 278 16% 89%; /* #E7E2EA */
+    --input: 278 16% 89%;
+    --ring: 311 55% 27%;
 
-    /* Deeper sapphire — the accessible brand color for small text/links on the
-       light page (kept under the legacy --gold-ink token name). */
-    --gold-ink: 224 76% 42%;
+    /* Plum as small text/links on the light page (kept under the legacy
+       --gold-ink token name). */
+    --gold-ink: 311 55% 32%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 222 60% 10%; /* midnight sidebar even in light mode */
-    --sidebar-foreground: 220 25% 78%;
-    --sidebar-primary: 222 100% 70%;
-    --sidebar-primary-foreground: 222 60% 8%;
-    --sidebar-accent: 222 45% 16%;
-    --sidebar-accent-foreground: 220 40% 94%;
-    --sidebar-border: 222 40% 18%;
-    --sidebar-ring: 222 100% 70%;
+    --sidebar-background: 285 40% 10%; /* aubergine sidebar even in light mode */
+    --sidebar-foreground: 285 15% 78%;
+    --sidebar-primary: 315 45% 72%;
+    --sidebar-primary-foreground: 285 40% 8%;
+    --sidebar-accent: 285 30% 17%;
+    --sidebar-accent-foreground: 290 30% 94%;
+    --sidebar-border: 285 25% 19%;
+    --sidebar-ring: 315 45% 72%;
 
     --glass-bg: 0 0% 100% / 0.78;
-    --glass-border: 222 74% 51% / 0.18;
-    --glow-primary: 222 74% 51% / 0.18;
+    --glass-border: 311 55% 27% / 0.16;
+    --glow-primary: 311 55% 27% / 0.16;
   }
 
   .dark {
     color-scheme: dark;
-    /* Midnight navy base; a brighter sapphire carries the brand on dark and
-       takes navy text on top for contrast. */
-    --background: 222 60% 6%; /* midnight */
-    --foreground: 220 40% 94%;
+    /* Near-black aubergine base; orchid carries the brand on dark and takes
+       aubergine text on top for contrast. */
+    --background: 280 27% 6%; /* #120C15 */
+    --foreground: 291 30% 95%; /* #F5EFF6 */
 
-    --card: 222 50% 10%;
-    --card-foreground: 220 40% 94%;
+    --card: 280 23% 10%; /* #1C1420 */
+    --card-foreground: 291 30% 95%;
 
-    --popover: 222 50% 10%;
-    --popover-foreground: 220 40% 94%;
+    --popover: 280 23% 10%;
+    --popover-foreground: 291 30% 95%;
 
-    /* Bright sapphire on dark, navy text on top. */
-    --primary: 222 100% 70%; /* ~#6699FF */
-    --primary-foreground: 222 60% 8%;
+    /* Orchid on dark, aubergine text on top. */
+    --primary: 315 40% 64%; /* #C77DB5 */
+    --primary-foreground: 285 40% 8%;
 
-    --secondary: 222 40% 16%;
-    --secondary-foreground: 220 40% 94%;
+    --copper: 24 83% 65%; /* #F0955A */
+    --copper-foreground: 285 40% 8%;
 
-    --muted: 222 40% 14%;
-    --muted-foreground: 220 20% 68%;
+    --secondary: 281 22% 14%; /* #271C2C */
+    --secondary-foreground: 291 30% 95%;
 
-    --accent: 222 40% 17%;
-    --accent-foreground: 220 40% 96%;
+    --muted: 281 22% 13%;
+    --muted-foreground: 282 10% 65%; /* #A99DAE */
 
-    --destructive: 0 66% 56%;
-    --destructive-foreground: 220 40% 96%;
+    --accent: 281 22% 14%;
+    --accent-foreground: 291 30% 96%;
 
-    --success: 150 50% 46%;
-    --success-foreground: 222 60% 8%;
+    --destructive: 4 70% 60%;
+    --destructive-foreground: 291 30% 96%;
+
+    --success: 156 55% 46%;
+    --success-foreground: 285 40% 8%;
 
     --warning: 38 88% 58%;
-    --warning-foreground: 222 60% 8%;
+    --warning-foreground: 285 40% 8%;
 
-    --border: 222 35% 20%;
-    --input: 222 35% 20%;
-    --ring: 222 100% 70%;
+    --border: 282 19% 21%; /* #3A2C40 */
+    --input: 282 19% 21%;
+    --ring: 315 40% 64%;
 
-    /* On dark, bright sapphire text is already high-contrast. */
-    --gold-ink: 222 100% 72%;
+    /* On dark, orchid text is already high-contrast. */
+    --gold-ink: 315 45% 74%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 222 60% 5%;
-    --sidebar-foreground: 220 20% 74%;
-    --sidebar-primary: 222 100% 70%;
-    --sidebar-primary-foreground: 222 60% 8%;
-    --sidebar-accent: 222 40% 14%;
-    --sidebar-accent-foreground: 220 40% 94%;
-    --sidebar-border: 222 35% 16%;
-    --sidebar-ring: 222 100% 70%;
+    --sidebar-background: 280 27% 5%;
+    --sidebar-foreground: 285 12% 74%;
+    --sidebar-primary: 315 40% 64%;
+    --sidebar-primary-foreground: 285 40% 8%;
+    --sidebar-accent: 281 22% 13%;
+    --sidebar-accent-foreground: 291 30% 94%;
+    --sidebar-border: 282 19% 16%;
+    --sidebar-ring: 315 40% 64%;
 
-    --glass-bg: 222 50% 10% / 0.5;
-    --glass-border: 222 100% 70% / 0.22;
-    --glow-primary: 222 100% 70% / 0.22;
+    --glass-bg: 280 23% 10% / 0.5;
+    --glass-border: 315 40% 64% / 0.2;
+    --glow-primary: 315 40% 64% / 0.2;
   }
 }
 
@@ -202,6 +212,11 @@
      which is the opposite of what a capital brand wants. */
   .btn-brand {
     @apply px-6 py-2.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm tracking-tight shadow-sm hover:bg-primary/90 transition-colors active:bg-primary;
+  }
+
+  /* Copper call-to-action. Dark text only (see --copper). */
+  .btn-cta {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md bg-copper text-copper-foreground font-semibold text-base shadow-sm hover:brightness-105 active:brightness-95 transition;
   }
 
   /* Small caps-ish eyebrow label used above section headings. Uses gold-ink,

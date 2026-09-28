@@ -19,7 +19,7 @@ export default function Accounts() {
               lev: "1:400",
               minTrade: "0.01 lot",
               swap: "No",
-              color: "from-blue-500/20",
+              color: "from-primary/20",
             },
             {
               name: "Min",
@@ -28,7 +28,7 @@ export default function Accounts() {
               lev: "1:1000",
               minTrade: "0.01 lot",
               swap: "No",
-              color: "from-cyan-500/20",
+              color: "from-copper/20",
             },
             {
               name: "Standard",

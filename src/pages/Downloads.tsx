@@ -22,7 +22,7 @@ export default function Downloads() {
       name: "Windows Desktop",
       description:
         "Full-featured trading experience with advanced charting and expert advisors.",
-      icon: <Monitor className="h-8 w-8 text-blue-500" />,
+      icon: <Monitor className="h-8 w-8 text-primary" />,
       link: "https://www.metatrader5.com/en/download",
       version: "Official Build",
     },

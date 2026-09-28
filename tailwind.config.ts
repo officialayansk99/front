@@ -22,6 +22,7 @@ export default {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         display: ["Fraunces", "Georgia", "serif"],
+        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -34,6 +35,10 @@ export default {
           foreground: "hsl(var(--primary-foreground))",
         },
         "gold-ink": "hsl(var(--gold-ink))",
+        copper: {
+          DEFAULT: "hsl(var(--copper))",
+          foreground: "hsl(var(--copper-foreground))",
+        },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",

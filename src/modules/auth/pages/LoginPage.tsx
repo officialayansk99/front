@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,11 @@ const defaultRegisterValues: RegisterInput = {
 export function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [mode, setMode] = useState<"login" | "register" | "forgot">("login");
+  const [searchParams] = useSearchParams();
+  // `?mode=register` lets landing-page CTAs open straight onto sign-up.
+  const [mode, setMode] = useState<"login" | "register" | "forgot">(() =>
+    searchParams.get("mode") === "register" ? "register" : "login",
+  );
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 

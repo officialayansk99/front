@@ -55,10 +55,26 @@ export default function LandingLayout() {
       <div className="min-h-screen overflow-x-hidden relative font-sans flex flex-col">
         {/* Global Background Effects */}
         {isDark ? (
-          <div className="absolute top-0 left-0 w-full h-[800px] bg-gradient-to-b from-primary/40 to-transparent pointer-events-none z-0" />
+          <div className="absolute top-0 left-0 w-full h-[800px] bg-gradient-to-b from-primary/15 to-transparent pointer-events-none z-0" />
         ) : (
-          <div className="absolute top-0 left-0 w-full h-[800px] bg-gradient-to-b from-primary/10 to-transparent pointer-events-none z-0" />
+          <div className="absolute top-0 left-0 w-full h-[800px] bg-gradient-to-b from-primary/[0.07] to-transparent pointer-events-none z-0" />
         )}
+
+        {/* Risk warning — slim, always visible, never dismissible. The full
+            text lives in the footer and on /risk. */}
+        <div className="relative z-[101] bg-accent text-accent-foreground/80 text-[11px] leading-snug px-4 py-2 text-center">
+          <strong className="font-semibold text-accent-foreground">
+            Risk warning:
+          </strong>{" "}
+          Forex and CFDs are complex instruments and carry a high risk of losing
+          money rapidly due to leverage.{" "}
+          <Link
+            to="/risk"
+            className="underline underline-offset-2 hover:text-accent-foreground"
+          >
+            Read more
+          </Link>
+        </div>
 
         {/* Navbar */}
         <nav className="relative z-[100] flex items-center justify-between pl-0 pr-4 py-6 sm:px-6 max-w-7xl mx-auto w-full">
@@ -480,9 +496,9 @@ export default function LandingLayout() {
                 </div>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                Equiti Capitals is a modern platform specializing in
-                online foreign exchange and Contract for Difference (CFD)
-                trading services.
+                Equiti Capitals is a modern platform specializing in online
+                foreign exchange and Contract for Difference (CFD) trading
+                services.
               </p>
               <div className="space-y-3">
                 <p className="flex items-center gap-3 text-sm text-muted-foreground">

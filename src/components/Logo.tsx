@@ -5,13 +5,13 @@ interface LogoProps {
 }
 
 /**
- * Equiti Capitals lockup: a "rising bars" mark + wordmark, in the Midnight &
- * Sapphire palette.
+ * Equiti Capitals lockup: a "rising bars" mark + wordmark, in the Plum &
+ * Copper palette.
  *
  * The mark is three ascending rounded bars — a chart read as a signal of growth
  * — kept deliberately name-neutral so the wordmark can change without redrawing
- * the symbol. Rendered in sapphire (brighter on dark surfaces), heavy enough to
- * hold up as a small favicon and a large nav mark alike.
+ * the symbol. Plum bars (orchid on dark surfaces) led by a copper bar, heavy
+ * enough to hold up as a small favicon and a large nav mark alike.
  *
  * The viewBox is deliberately tight (2.5:1) because every caller sizes this by
  * height with `w-auto`; slack inside the viewBox would render as dead space
@@ -33,8 +33,8 @@ export default function Logo({ className }: LogoProps) {
         width="16"
         height="30"
         rx="5"
-        className="fill-[#245be0] dark:fill-[#6699ff]"
-        opacity="0.55"
+        className="fill-[#6A1F5C] dark:fill-[#C77DB5]"
+        opacity="0.45"
       />
       <rect
         x="38"
@@ -42,8 +42,8 @@ export default function Logo({ className }: LogoProps) {
         width="16"
         height="48"
         rx="5"
-        className="fill-[#245be0] dark:fill-[#6699ff]"
-        opacity="0.8"
+        className="fill-[#6A1F5C] dark:fill-[#C77DB5]"
+        opacity="0.75"
       />
       <rect
         x="62"
@@ -51,7 +51,7 @@ export default function Logo({ className }: LogoProps) {
         width="16"
         height="68"
         rx="5"
-        className="fill-[#245be0] dark:fill-[#6699ff]"
+        className="fill-[#D9793B] dark:fill-[#F0955A]"
       />
 
       {/* Wordmark. textLength pins each line to an exact width so a wider face
@@ -69,7 +69,7 @@ export default function Logo({ className }: LogoProps) {
         fontSize="36"
         fontFamily="Fraunces, Georgia, serif"
         fontWeight="800"
-        className="fill-[#0f1a2e] dark:fill-[#eef2fb]"
+        className="fill-[#1A1320] dark:fill-[#F5EFF6]"
       >
         EQUITI
       </text>
@@ -83,7 +83,7 @@ export default function Logo({ className }: LogoProps) {
         fontSize="11"
         fontFamily="Inter, system-ui, sans-serif"
         fontWeight="700"
-        className="fill-[#1d4ed8] dark:fill-[#6699ff]"
+        className="fill-[#6A1F5C] dark:fill-[#C77DB5]"
       >
         CAPITALS
       </text>

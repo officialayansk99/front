@@ -504,7 +504,7 @@ export default function ClientsList() {
                         <DropdownMenuItem
                           onClick={() => handleImpersonate(client.id)}
                         >
-                          <ExternalLink className="mr-2 h-4 w-4 text-blue-500" />
+                          <ExternalLink className="mr-2 h-4 w-4 text-primary" />
                           Auto-Login
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
