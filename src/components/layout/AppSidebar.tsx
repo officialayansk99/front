@@ -152,6 +152,7 @@ export default function AppSidebar({
         >
           <div className="flex items-center gap-3 overflow-hidden">
             <Logo
+              onDark
               className={cn(
                 "h-14 w-auto transition-all duration-300",
                 collapsed ? "h-10" : "",

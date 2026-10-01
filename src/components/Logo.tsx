@@ -2,25 +2,28 @@ import { cn } from "@/lib/utils";
 
 interface LogoProps {
   className?: string;
+  /** Force the bone version, for surfaces that stay dark in light mode. */
+  onDark?: boolean;
 }
 
 /**
- * Equiti Capitals lockup: a "rising bars" mark + wordmark, in the Onyx &
- * Teal palette.
+ * Equiti Capitals lockup: a "rising bars" mark beside the full name set as one
+ * lowercase serif wordmark.
  *
- * The mark is three ascending rounded bars — a chart read as a signal of growth
- * — kept deliberately name-neutral so the wordmark can change without redrawing
- * the symbol. Teal bars (mint on dark surfaces), heavy enough to hold up as a
- * small favicon and a large nav mark alike.
+ * The lockup is monochrome — ink on light surfaces, bone on dark — so it holds
+ * up on any background and does not depend on the accent colour. The mark is
+ * three ascending rounded bars, a chart read as a signal of growth.
  *
- * The viewBox is deliberately tight (2.5:1) because every caller sizes this by
- * height with `w-auto`; slack inside the viewBox would render as dead space
- * next to the nav items.
+ * The viewBox is deliberately tight (about 3.3:1) because every caller sizes
+ * this by height with `w-auto`; slack inside the viewBox would render as dead
+ * space next to the nav items.
  */
-export default function Logo({ className }: LogoProps) {
+export default function Logo({ className, onDark }: LogoProps) {
+  const fill = onDark ? "fill-[#f2efe6]" : "fill-[#14140f] dark:fill-[#f2efe6]";
+
   return (
     <svg
-      viewBox="0 0 240 96"
+      viewBox="0 0 320 96"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="Equiti Capitals"
@@ -33,8 +36,8 @@ export default function Logo({ className }: LogoProps) {
         width="16"
         height="30"
         rx="5"
-        className="fill-[#23a594] dark:fill-[#83cfc1]"
-        opacity="0.45"
+        className={fill}
+        opacity="0.4"
       />
       <rect
         x="38"
@@ -42,50 +45,25 @@ export default function Logo({ className }: LogoProps) {
         width="16"
         height="48"
         rx="5"
-        className="fill-[#23a594] dark:fill-[#83cfc1]"
-        opacity="0.75"
+        className={fill}
+        opacity="0.7"
       />
-      <rect
-        x="62"
-        y="14"
-        width="16"
-        height="68"
-        rx="5"
-        className="fill-[#23a594] dark:fill-[#83cfc1]"
-      />
+      <rect x="62" y="14" width="16" height="68" rx="5" className={fill} />
 
-      {/* Wordmark. textLength pins each line to an exact width so a wider face
-          (Fraunces on the site vs. the Georgia fallback) can't overflow and get
-          clipped by the viewBox. letterSpacing is set to land at roughly the
-          same width on its own, because SVG rasterisers — including the one that
-          bakes the email PNG — ignore textLength entirely. Belt and braces: both
-          render paths agree. */}
+      {/* Wordmark. textLength pins the line to an exact width so a wider face
+          (Fraunces on the site vs. the Georgia fallback) cannot overflow and
+          get clipped by the viewBox. */}
       <text
         x="96"
-        y="55"
-        textLength="132"
-        lengthAdjust="spacing"
-        letterSpacing="0"
-        fontSize="36"
+        y="59"
+        textLength="210"
+        lengthAdjust="spacingAndGlyphs"
+        fontSize="30"
         fontFamily="Fraunces, Georgia, serif"
-        fontWeight="800"
-        className="fill-[#14140f] dark:fill-[#f2efe6]"
-      >
-        EQUITI
-      </text>
-
-      <text
-        x="98"
-        y="76"
-        textLength="86"
-        lengthAdjust="spacing"
-        letterSpacing="3.9"
-        fontSize="11"
-        fontFamily="Inter, system-ui, sans-serif"
         fontWeight="700"
-        className="fill-[#23a594] dark:fill-[#83cfc1]"
+        className={fill}
       >
-        CAPITALS
+        equiti capitals
       </text>
     </svg>
   );
