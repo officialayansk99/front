@@ -143,7 +143,7 @@ export default function Home() {
               Forex · Commodities · Stocks · Crypto — on MetaTrader 5
             </p>
             <h1 className="font-display text-[2.5rem] sm:text-6xl lg:text-7xl font-semibold leading-[1.02] mb-6 text-balance">
-              Raw spreads. <span className="text-gold-ink italic">Real</span>{" "}
+              Raw spreads. <span className="text-gold-ink">Real</span>{" "}
               execution.
             </h1>
             <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto mb-9 leading-relaxed">

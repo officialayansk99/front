@@ -8,7 +8,7 @@ interface LogoProps {
 
 /**
  * Equiti Capitals lockup: a "rising bars" mark beside the full name set as one
- * lowercase serif wordmark.
+ * sans-serif wordmark.
  *
  * The lockup is monochrome — ink on light surfaces, bone on dark — so it holds
  * up on any background and does not depend on the accent colour. The mark is
@@ -51,7 +51,7 @@ export default function Logo({ className, onDark }: LogoProps) {
       <rect x="62" y="14" width="16" height="68" rx="5" className={fill} />
 
       {/* Wordmark. textLength pins the line to an exact width so a wider face
-          (Fraunces on the site vs. the Georgia fallback) cannot overflow and
+          (a system fallback while Inter loads) cannot overflow and
           get clipped by the viewBox. */}
       <text
         x="96"
@@ -59,11 +59,11 @@ export default function Logo({ className, onDark }: LogoProps) {
         textLength="210"
         lengthAdjust="spacingAndGlyphs"
         fontSize="30"
-        fontFamily="Fraunces, Georgia, serif"
-        fontWeight="700"
+        fontFamily="Inter, system-ui, sans-serif"
+        fontWeight="800"
         className={fill}
       >
-        equiti capitals
+        Equiti Capitals
       </text>
     </svg>
   );

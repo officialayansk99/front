@@ -4,8 +4,8 @@
   <rect x="38" y="34" width="16" height="48" rx="5" fill="#14140f" opacity="0.7"/>
   <rect x="62" y="14" width="16" height="68" rx="5" fill="#14140f"/>
 
-  <!-- Wordmark: the full name, lowercase, on one line. textLength pins the
+  <!-- Wordmark: the full name on one line. textLength pins the
        width in browsers; rasterisers ignore it and use the natural width. -->
   <text x="96" y="59" textLength="210" lengthAdjust="spacingAndGlyphs"
-        font-size="30" font-family="Fraunces, Georgia, serif" font-weight="700" fill="#14140f">equiti capitals</text>
+        font-size="30" font-family="Inter, Arial, sans-serif" font-weight="800" fill="#14140f">Equiti Capitals</text>
 </svg>
