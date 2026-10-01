@@ -569,7 +569,7 @@ export default function Home() {
       <section className="relative z-10 px-6 pb-24">
         <motion.div
           {...fadeUp}
-          className="max-w-7xl mx-auto rounded-3xl bg-gradient-to-br from-primary to-accent text-primary-foreground px-8 py-16 md:px-16 flex flex-col md:flex-row md:items-center justify-between gap-8"
+          className="max-w-7xl mx-auto rounded-3xl bg-accent text-accent-foreground px-8 py-16 md:px-16 flex flex-col md:flex-row md:items-center justify-between gap-8"
         >
           <div className="max-w-xl">
             <h2 className="font-display text-4xl md:text-5xl font-semibold leading-[1.08] mb-4">

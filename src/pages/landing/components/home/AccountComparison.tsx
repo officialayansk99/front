@@ -93,7 +93,7 @@ export default function AccountComparison() {
                 <th
                   key={a.name}
                   scope="col"
-                  className={`p-4 sm:p-5 text-left align-bottom ${a.popular ? "bg-primary/[0.06] border-t-2 border-primary" : ""}`}
+                  className={`p-4 sm:p-5 text-left align-bottom ${a.popular ? "bg-primary/[0.14] border-t-2 border-primary" : ""}`}
                 >
                   {a.popular && (
                     <span className="mb-2 inline-block rounded-full bg-copper px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-copper-foreground">
@@ -122,7 +122,7 @@ export default function AccountComparison() {
                 {accounts.map((a) => (
                   <td
                     key={a.name}
-                    className={`p-4 sm:p-5 whitespace-nowrap font-mono tabular-nums font-semibold text-foreground ${a.popular ? "bg-primary/[0.06]" : ""}`}
+                    className={`p-4 sm:p-5 whitespace-nowrap font-mono tabular-nums font-semibold text-foreground ${a.popular ? "bg-primary/[0.14]" : ""}`}
                   >
                     {row.label === "Platform" ? (
                       <span className="inline-flex items-center gap-1.5 font-sans font-medium">
@@ -141,7 +141,7 @@ export default function AccountComparison() {
               {accounts.map((a) => (
                 <td
                   key={a.name}
-                  className={`p-5 ${a.popular ? "bg-primary/[0.06]" : ""}`}
+                  className={`p-5 ${a.popular ? "bg-primary/[0.14]" : ""}`}
                 >
                   <Link
                     to="/login?mode=register"

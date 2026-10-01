@@ -9,130 +9,129 @@
 @layer base {
   :root {
     color-scheme: light;
-    /* "Plum & Copper" palette. Deep plum carries the brand as a fill, copper is
-       reserved for the primary call-to-action, and a cool porcelain page keeps
-       long portal sessions crisp. Deliberately no blue, navy or teal: those
-       belong to sibling brands and to an unrelated broker with a similar name. */
-    --background: 280 14% 97%; /* porcelain #F8F7F9 */
-    --foreground: 283 26% 10%; /* aubergine ink #1A1320 */
+    /* "Onyx & Teal" palette. Light mode is a warm bone white so the mint-teal
+       brand color reads as a soft accent and long portal sessions stay easy. */
+    --background: 42 30% 93%; /* bone white */
+    --foreground: 240 8% 11%; /* charcoal */
 
-    --card: 0 0% 100%;
-    --card-foreground: 283 26% 10%;
+    --card: 42 33% 97%;
+    --card-foreground: 240 8% 11%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 283 26% 10%;
+    --popover: 42 33% 97%;
+    --popover-foreground: 240 8% 11%;
 
-    /* Plum. Used as a FILL (buttons, rules, logo) with white text on top
-       (~10:1, passes AA). */
-    --primary: 311 55% 27%; /* #6A1F5C */
-    --primary-foreground: 0 0% 100%;
+    /* Mint teal. Used as a FILL (buttons, rules, logo) with onyx text on
+       top — it is a light tone and makes poor body text on white, so text/links
+       use --gold-ink below instead. */
+    --primary: 169 44% 66%; /* ~#83CFC1 */
+    --primary-foreground: 240 10% 7%; /* onyx text on teal */
 
-    /* Copper. The call-to-action colour; takes DARK text only — white on
-       copper fails contrast. */
-    --copper: 24 68% 54%; /* #D9793B */
-    --copper-foreground: 283 26% 10%;
+    /* Call-to-action fill. Same mint as --primary; kept as its own token so
+       CTA styling can diverge without touching every button. Onyx text only. */
+    --copper: 169 44% 66%;
+    --copper-foreground: 240 10% 7%;
 
-    --secondary: 280 16% 93%;
-    --secondary-foreground: 283 30% 16%;
+    --secondary: 42 18% 88%;
+    --secondary-foreground: 240 8% 14%;
 
-    --muted: 280 14% 94%;
-    --muted-foreground: 275 8% 42%; /* #6E6475 */
+    --muted: 42 15% 88%;
+    --muted-foreground: 240 5% 32%;
 
-    --accent: 285 40% 10%; /* deep aubergine, used for dark bands */
-    --accent-foreground: 290 30% 96%;
+    --accent: 240 9% 9%; /* onyx */
+    --accent-foreground: 42 30% 95%;
 
-    --destructive: 4 65% 54%; /* #D6453D */
+    --destructive: 0 70% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 156 67% 37%; /* #1F9D6B */
+    --success: 150 48% 30%;
     --success-foreground: 0 0% 100%;
 
     --warning: 35 85% 42%;
-    --warning-foreground: 0 0% 100%;
+    --warning-foreground: 42 30% 97%;
 
-    --border: 278 16% 89%; /* #E7E2EA */
-    --input: 278 16% 89%;
-    --ring: 311 55% 27%;
+    --border: 42 16% 82%;
+    --input: 42 16% 82%;
+    --ring: 169 45% 45%;
 
-    /* Plum as small text/links on the light page (kept under the legacy
-       --gold-ink token name). */
-    --gold-ink: 311 55% 32%;
+    /* Deep teal — the accessible brand color for small text/links on the light
+       bone background (passes AA where --primary would not). */
+    --gold-ink: 172 58% 30%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 285 40% 10%; /* aubergine sidebar even in light mode */
-    --sidebar-foreground: 285 15% 78%;
-    --sidebar-primary: 315 45% 72%;
-    --sidebar-primary-foreground: 285 40% 8%;
-    --sidebar-accent: 285 30% 17%;
-    --sidebar-accent-foreground: 290 30% 94%;
-    --sidebar-border: 285 25% 19%;
-    --sidebar-ring: 315 45% 72%;
+    --sidebar-background: 240 9% 9%; /* onyx sidebar even in light mode */
+    --sidebar-foreground: 42 20% 78%;
+    --sidebar-primary: 169 44% 62%;
+    --sidebar-primary-foreground: 240 10% 7%;
+    --sidebar-accent: 240 6% 15%;
+    --sidebar-accent-foreground: 42 28% 92%;
+    --sidebar-border: 240 6% 16%;
+    --sidebar-ring: 169 44% 62%;
 
-    --glass-bg: 0 0% 100% / 0.78;
-    --glass-border: 311 55% 27% / 0.16;
-    --glow-primary: 311 55% 27% / 0.16;
+    --glass-bg: 42 33% 97% / 0.78;
+    --glass-border: 169 44% 50% / 0.18;
+    --glow-primary: 169 44% 55% / 0.16;
   }
 
   .dark {
     color-scheme: dark;
-    /* Near-black aubergine base; orchid carries the brand on dark and takes
-       aubergine text on top for contrast. */
-    --background: 280 27% 6%; /* #120C15 */
-    --foreground: 291 30% 95%; /* #F5EFF6 */
+    /* Onyx base. This is the brand's primary surface — mint teal on near-black is
+       the hero combination and clears AA comfortably. */
+    --background: 240 8% 5%; /* onyx */
+    --foreground: 42 28% 92%; /* warm bone text */
 
-    --card: 280 23% 10%; /* #1C1420 */
-    --card-foreground: 291 30% 95%;
+    --card: 240 8% 9%;
+    --card-foreground: 42 28% 92%;
 
-    --popover: 280 23% 10%;
-    --popover-foreground: 291 30% 95%;
+    --popover: 240 8% 9%;
+    --popover-foreground: 42 28% 92%;
 
-    /* Orchid on dark, aubergine text on top. */
-    --primary: 315 40% 64%; /* #C77DB5 */
-    --primary-foreground: 285 40% 8%;
+    /* Mint teal on dark, onyx text on top. */
+    --primary: 169 44% 66%;
+    --primary-foreground: 240 10% 6%;
 
-    --copper: 24 83% 65%; /* #F0955A */
-    --copper-foreground: 285 40% 8%;
+    --copper: 169 44% 66%;
+    --copper-foreground: 240 10% 6%;
 
-    --secondary: 281 22% 14%; /* #271C2C */
-    --secondary-foreground: 291 30% 95%;
+    --secondary: 240 6% 15%;
+    --secondary-foreground: 42 28% 92%;
 
-    --muted: 281 22% 13%;
-    --muted-foreground: 282 10% 65%; /* #A99DAE */
+    --muted: 240 6% 13%;
+    --muted-foreground: 42 12% 68%;
 
-    --accent: 281 22% 14%;
-    --accent-foreground: 291 30% 96%;
+    --accent: 240 6% 16%;
+    --accent-foreground: 42 28% 94%;
 
-    --destructive: 4 70% 60%;
-    --destructive-foreground: 291 30% 96%;
+    --destructive: 0 66% 56%;
+    --destructive-foreground: 42 28% 94%;
 
-    --success: 156 55% 46%;
-    --success-foreground: 285 40% 8%;
+    --success: 150 50% 46%;
+    --success-foreground: 240 10% 6%;
 
     --warning: 38 88% 58%;
-    --warning-foreground: 285 40% 8%;
+    --warning-foreground: 240 10% 6%;
 
-    --border: 282 19% 21%; /* #3A2C40 */
-    --input: 282 19% 21%;
-    --ring: 315 40% 64%;
+    --border: 240 6% 18%;
+    --input: 240 6% 18%;
+    --ring: 169 44% 62%;
 
-    /* On dark, orchid text is already high-contrast. */
-    --gold-ink: 315 45% 74%;
+    /* On dark, mint teal text is already high-contrast — same as primary. */
+    --gold-ink: 169 44% 66%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 280 27% 5%;
-    --sidebar-foreground: 285 12% 74%;
-    --sidebar-primary: 315 40% 64%;
-    --sidebar-primary-foreground: 285 40% 8%;
-    --sidebar-accent: 281 22% 13%;
-    --sidebar-accent-foreground: 291 30% 94%;
-    --sidebar-border: 282 19% 16%;
-    --sidebar-ring: 315 40% 64%;
+    --sidebar-background: 240 9% 4%;
+    --sidebar-foreground: 42 16% 74%;
+    --sidebar-primary: 169 44% 62%;
+    --sidebar-primary-foreground: 240 10% 6%;
+    --sidebar-accent: 240 6% 14%;
+    --sidebar-accent-foreground: 42 28% 92%;
+    --sidebar-border: 240 6% 16%;
+    --sidebar-ring: 169 44% 62%;
 
-    --glass-bg: 280 23% 10% / 0.5;
-    --glass-border: 315 40% 64% / 0.2;
-    --glow-primary: 315 40% 64% / 0.2;
+    --glass-bg: 240 8% 9% / 0.5;
+    --glass-border: 169 44% 58% / 0.24;
+    --glow-primary: 169 44% 62% / 0.2;
   }
 }
 
@@ -214,7 +213,7 @@
     @apply px-6 py-2.5 rounded-md bg-primary text-primary-foreground font-semibold text-sm tracking-tight shadow-sm hover:bg-primary/90 transition-colors active:bg-primary;
   }
 
-  /* Copper call-to-action. Dark text only (see --copper). */
+  /* Call-to-action button. Onyx text only (see --copper). */
   .btn-cta {
     @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-md bg-copper text-copper-foreground font-semibold text-base shadow-sm hover:brightness-105 active:brightness-95 transition;
   }
