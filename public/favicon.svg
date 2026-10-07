@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Equiti Capitals favicon">
-  <rect width="96" height="96" rx="20" fill="#0b0b0d"/>
-  <rect x="18" y="52" width="16" height="26" rx="5" fill="#f2efe6" opacity="0.5"/>
-  <rect x="40" y="36" width="16" height="42" rx="5" fill="#f2efe6" opacity="0.75"/>
-  <rect x="62" y="18" width="16" height="60" rx="5" fill="#f2efe6"/>
+  <rect width="96" height="96" rx="22" fill="#0b0b0d"/>
+  <rect x="24" y="22" width="12" height="52" fill="#83cfc1"/>
+    <polygon points="24,22 76,22 69.1,34 24,34" fill="#83cfc1"/>
+    <polygon points="24,42 64.5,42 57.5,54 24,54" fill="#83cfc1"/>
+    <polygon points="24,62 52.9,62 46,74 24,74" fill="#83cfc1"/>
 </svg>

@@ -2,24 +2,29 @@ import { cn } from "@/lib/utils";
 
 interface LogoProps {
   className?: string;
-  /** Force the bone version, for surfaces that stay dark in light mode. */
+  /** Force the dark-surface version, for surfaces that stay dark in light mode. */
   onDark?: boolean;
 }
 
 /**
- * Equiti Capitals lockup: a "rising bars" mark beside the full name set as one
- * sans-serif wordmark.
+ * Equiti Capitals lockup: a rounded tile holding a capital "E" beside the full
+ * name set as one sans-serif wordmark.
  *
- * The lockup is monochrome — ink on light surfaces, bone on dark — so it holds
- * up on any background and does not depend on the accent colour. The mark is
- * three ascending rounded bars, a chart read as a signal of growth.
+ * The E's three arms are sliced by a single rising diagonal, so the letter
+ * doubles as a chart climbing to the top right. On light surfaces the tile is
+ * onyx with a mint E; on dark surfaces it inverts to a mint tile with an onyx
+ * E, the same pairing as the site's buttons.
  *
  * The viewBox is deliberately tight (about 3.3:1) because every caller sizes
  * this by height with `w-auto`; slack inside the viewBox would render as dead
  * space next to the nav items.
  */
 export default function Logo({ className, onDark }: LogoProps) {
-  const fill = onDark ? "fill-[#f2efe6]" : "fill-[#14140f] dark:fill-[#f2efe6]";
+  const text = onDark ? "fill-[#f2efe6]" : "fill-[#14140f] dark:fill-[#f2efe6]";
+  const tile = onDark ? "fill-[#83cfc1]" : "fill-[#0b0b0d] dark:fill-[#83cfc1]";
+  const glyph = onDark
+    ? "fill-[#0b0b0d]"
+    : "fill-[#83cfc1] dark:fill-[#0b0b0d]";
 
   return (
     <svg
@@ -29,26 +34,14 @@ export default function Logo({ className, onDark }: LogoProps) {
       aria-label="Equiti Capitals"
       className={cn("w-auto", className)}
     >
-      {/* Rising bars — short, medium, tall */}
-      <rect
-        x="14"
-        y="52"
-        width="16"
-        height="30"
-        rx="5"
-        className={fill}
-        opacity="0.4"
-      />
-      <rect
-        x="38"
-        y="34"
-        width="16"
-        height="48"
-        rx="5"
-        className={fill}
-        opacity="0.7"
-      />
-      <rect x="62" y="14" width="16" height="68" rx="5" className={fill} />
+      {/* Tile + sliced E, drawn on a 96 grid and scaled to 72. */}
+      <g transform="translate(8 12) scale(0.75)">
+        <rect width="96" height="96" rx="22" className={tile} />
+        <rect x="24" y="22" width="12" height="52" className={glyph} />
+        <polygon points="24,22 76,22 69.1,34 24,34" className={glyph} />
+        <polygon points="24,42 64.5,42 57.5,54 24,54" className={glyph} />
+        <polygon points="24,62 52.9,62 46,74 24,74" className={glyph} />
+      </g>
 
       {/* Wordmark. textLength pins the line to an exact width so a wider face
           (a system fallback while Inter loads) cannot overflow and
@@ -61,7 +54,7 @@ export default function Logo({ className, onDark }: LogoProps) {
         fontSize="30"
         fontFamily="Inter, system-ui, sans-serif"
         fontWeight="800"
-        className={fill}
+        className={text}
       >
         Equiti Capitals
       </text>
